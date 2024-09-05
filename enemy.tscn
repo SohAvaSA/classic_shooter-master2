@@ -1,0 +1,117 @@
+[gd_scene load_steps=15 format=3 uid="uid://du1gt5fcq7yol"]
+
+[ext_resource type="Script" path="res://enemy.gd" id="1_ehinr"]
+[ext_resource type="Texture2D" uid="uid://581esl2mng2g" path="res://Mini Pixel Pack 3/Enemies/Bon_Bon (16 x 16).png" id="1_r1rkf"]
+[ext_resource type="Texture2D" uid="uid://cmacgmohnosq1" path="res://Mini Pixel Pack 3/Effects/Explosion (16 x 16).png" id="3_p17va"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8ahaq"]
+size = Vector2(12, 8)
+
+[sub_resource type="Animation" id="Animation_3lt1s"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D2:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_na8a1"]
+resource_name = "explode"
+length = 0.5
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D2:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0, 4]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fa702"]
+_data = {
+"RESET": SubResource("Animation_3lt1s"),
+"explode": SubResource("Animation_na8a1")
+}
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aoxx5"]
+atlas = ExtResource("1_r1rkf")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mo8kl"]
+atlas = ExtResource("1_r1rkf")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pbqs3"]
+atlas = ExtResource("1_r1rkf")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q6155"]
+atlas = ExtResource("1_r1rkf")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_genat"]
+atlas = ExtResource("1_r1rkf")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1yron"]
+atlas = ExtResource("1_r1rkf")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_h5k0w"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aoxx5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mo8kl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pbqs3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q6155")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_genat")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1yron")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Enemy" type="Area2D" groups=["enemies"]]
+script = ExtResource("1_ehinr")
+metadata/_edit_vertical_guides_ = [22.0]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_8ahaq")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_fa702")
+}
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+show_behind_parent = true
+texture = ExtResource("3_p17va")
+hframes = 6
+
+[node name="Body" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_h5k0w")
+autoplay = "default"
